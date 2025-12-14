@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Login from "../components/Login";
-import { signInUser } from "../api/authAPI";
+import SignIn from "../components/SignIn";
+import { signUpUser, signInUser } from "../api/authAPI";
 
-const LoginContainer = () => {
+
+const SigninContainer = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
   });
 
+  const [isSignup, setIsSignup] = useState(true);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -20,22 +23,27 @@ const LoginContainer = () => {
   const handleSubmit = async () => {
     setError("");
     try {
-      await signInUser(form);
-      navigate("/dashboard");
+      if (isSignup) {
+        await signUpUser(form);
+      } else {
+        await signInUser(form);
+      }
+      navigate("/dashboard"); 
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <Login
-      email={form.email}
-      password={form.password}
+    <SignIn
+      {...form}
       onChange={handleChange}
       onSubmit={handleSubmit}
+      isSignup={isSignup}
+      setIsSignup={setIsSignup}
       error={error}
     />
   );
 };
 
-export default LoginContainer;
+export default SigninContainer;
