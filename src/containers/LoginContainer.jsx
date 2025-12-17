@@ -1,41 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Login from "../components/Login";
-import { signInUser } from "../api/authAPI";
+import Login  from "../components/Login"
 
 const LoginContainer = () => {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async () => {
-    setError("");
-    try {
-      await signInUser(form);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
   return (
-    <Login
-      email={form.email}
-      password={form.password}
-      onChange={handleChange}
-      onSubmit={handleSubmit}
-      error={error}
-    />
-  );
-};
+    <div>
+      <Login />
+    </div>
+  )
+}
 
-export default LoginContainer;
+export default LoginContainer
