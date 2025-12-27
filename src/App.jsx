@@ -2,7 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
 import Landing_page from "./landingpage/landing_page";
 import SigninContainer from "./containers/SigninContainer";
-import FFDashboard from "./components/ff_dashboard";
+import FFDashboard from "./pages/ff_dashboard";
+import Project from "./pages/project";
 import LoginContainer from "./containers/LoginContainer";
 import ProtectedRouter from "./routes/ProtectedRouter";
 
@@ -25,7 +26,14 @@ const router = createBrowserRouter([
           )
       },
 
-      
+      { path: "/projects/:id" ,
+       element: (
+        <ProtectedRouter>
+         <Project />
+         </ProtectedRouter>
+          )
+      },
+
       {
         path: "/login",
         element: <LoginContainer />
