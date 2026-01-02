@@ -22,8 +22,29 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
     editingProject?.deadline ? new Date(editingProject.deadline) : null
   );
 
+  // Error state for validation
+  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Clear error when user types
+    if (error) setError("");
+  };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+    // Clear error when date changes
+    if (error) setError("");
+    // If end date is now before start date, clear it
+    if (endDate && date && endDate < date) {
+      setEndDate(null);
+    }
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+    // Clear error when date changes
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -31,18 +52,18 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
 
     // ================= DATE VALIDATION =================
     if (!startDate) {
-      console.error("Start date is required");
+      setError("Start date is required");
       return;
     }
 
     if (!endDate) {
-      console.error("End date is required");
+      setError("End date is required");
       return;
     }
 
     // End date must be >= start date
     if (endDate < startDate) {
-      console.error("End date cannot be before start date");
+      setError("End date cannot be before start date");
       return;
     }
 
@@ -51,7 +72,7 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
       name: formData.projectName,
       client_name: formData.clientName,
       description: formData.description,
-      deadline: endDate, 
+      deadline: endDate,
     };
 
     try {
@@ -73,6 +94,7 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
       onClose?.();
     } catch (err) {
       console.error("Save project failed:", err);
+      setError("Failed to save project. Please try again.");
     }
   };
 
@@ -108,8 +130,9 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
             <label>Start Date</label>
             <DatePicker
               selected={startDate}
-              onChange={setStartDate}
+              onChange={handleStartDateChange}
               minDate={new Date()} // cannot pick past dates
+              dateFormat="dd/MM/yy"
             />
           </div>
 
@@ -117,11 +140,19 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
             <label>End Date</label>
             <DatePicker
               selected={endDate}
-              onChange={setEndDate}
+              onChange={handleEndDateChange}
               minDate={startDate || new Date()} // cannot be before start date
+              dateFormat="dd/MM/yy"
             />
           </div>
         </div>
+
+        {/* Error Message Display */}
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
         <label>Description</label>
         <textarea
@@ -145,3 +176,4 @@ const CreateProject = ({ editingProject, onClose, onSuccess }) => {
 };
 
 export default CreateProject;
+

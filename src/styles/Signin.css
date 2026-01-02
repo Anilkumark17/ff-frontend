@@ -1,17 +1,24 @@
+/* ================================
+   SIGNIN/LOGIN PAGE STYLES
+================================ */
+
 .signin-wrapper {
   min-height: 100vh;
   background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .signin-card {
-  width: 420px;
-  background: #f3f2ff;
-  padding: 40px;
-  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  background: #f4f2ff;
+  padding: 48px 40px;
+  border-radius: 24px;
   text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .signin-logo {
@@ -21,65 +28,132 @@
   gap: 10px;
   font-weight: 700;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-
 .signin-logo img {
-  width: 150px;
+  width: 160px;
+  height: auto;
 }
 
 .signin-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
+  color: #2e2e2e;
+  letter-spacing: -0.02em;
 }
+
+/* ================================
+   FORM FIELDS
+================================ */
 
 .signin-field {
   text-align: left;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .signin-field label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: block;
+  color: #2e2e2e;
 }
 
 .signin-field input {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 14px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  border: 2px solid #e6e3ff;
+  font-size: 15px;
   outline: none;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
+
+.signin-field input:focus {
+  border-color: #6f3ff5;
+  box-shadow: 0 0 0 3px rgba(111, 63, 245, 0.1);
+}
+
+.signin-field input::placeholder {
+  color: #9ca3af;
+}
+
+/* ================================
+   BUTTONS
+================================ */
 
 .signin-btn {
   width: 100%;
-  margin-top: 20px;
-  padding: 12px;
+  margin-top: 24px;
+  padding: 14px;
   border-radius: 10px;
   border: none;
   background: #6f3ff5;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .signin-btn:hover {
   background: #5a2fd6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(111, 63, 245, 0.25);
 }
 
+.signin-btn:active {
+  transform: translateY(0);
+}
+
+.signin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ================================
+   FOOTER
+================================ */
+
 .signin-footer {
-  margin-top: 20px;
-  font-size: 13px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: #555;
 }
 
 .signin-footer span {
   color: #6f3ff5;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.signin-footer span:hover {
+  color: #5a2fd6;
+  text-decoration: underline;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 500px) {
+  .signin-card {
+    padding: 36px 28px;
+    border-radius: 20px;
+  }
+
+  .signin-title {
+    font-size: 20px;
+  }
+
+  .signin-logo img {
+    width: 140px;
+  }
 }
