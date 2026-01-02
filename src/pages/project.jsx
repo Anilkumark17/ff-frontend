@@ -3,6 +3,8 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { getProjectByIdAPI, sendInviteAPI } from "../api/projectAPi";
 import { getAssetsAPI } from "../api/assetAPi";
 import AssetUpload from "../components/project/AssetUpload";
+import FinalUpload from "../components/project/FinalUpload";
+import FinalWorkList from "../components/project/FinalWorkList";
 import "./project.css";
 
 const Project = () => {
@@ -23,6 +25,9 @@ const Project = () => {
   // Add contributor state
   const [email, setEmail] = useState("");
   const [inviting, setInviting] = useState(false);
+  
+  // Final work refresh trigger
+  const [finalRefreshTrigger, setFinalRefreshTrigger] = useState(0);
 
   // ================= FETCH PROJECT + ASSETS =================
   const fetchProjectAndAssets = useCallback(async () => {
@@ -41,7 +46,7 @@ const Project = () => {
         const assetRes = await getAssetsAPI({ projectId: id, token });
         setAssets(assetRes?.data || []);
       } catch (assetErr) {
-        console.warn("[Assets] Not found yet, continuing safely");
+        console.warn("[Assets] Not found yet, continuing safely", assetErr);
         setAssets([]);
       }
     } catch (err) {
@@ -164,10 +169,16 @@ const Project = () => {
         {/* FINAL TAB */}
         {activeTab === "final" && (
           <div className="final-tab">
-            <div className="placeholder-content">
-              <span className="placeholder-icon">🎯</span>
-              <h3>Final Deliverables</h3>
-              <p>Final project deliverables will appear here</p>
+            <FinalUpload 
+              projectId={id} 
+              onUploadSuccess={() => setFinalRefreshTrigger(prev => prev + 1)}
+            />
+            <div style={{ marginTop: '40px' }}>
+              <FinalWorkList 
+                projectId={id}
+                onSelectWork={(outputId) => navigate(`/final/${outputId}`)}
+                refreshTrigger={finalRefreshTrigger}
+              />
             </div>
           </div>
         )}

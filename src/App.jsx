@@ -6,6 +6,8 @@ import FFDashboard from "./pages/ff_dashboard";
 import Project from "./pages/project";
 import LoginContainer from "./containers/LoginContainer";
 import ProtectedRouter from "./routes/ProtectedRouter";
+import FinalWorkDetail from "./pages/FinalWorkDetail";
+import PublicFinalView from "./pages/PublicFinalView";
 
 
 const router = createBrowserRouter([
@@ -34,9 +36,22 @@ const router = createBrowserRouter([
           )
       },
 
+      { path: "/final/:id",
+       element: (
+        <ProtectedRouter>
+         <FinalWorkDetail />
+         </ProtectedRouter>
+          )
+      },
+
       {
         path: "/login",
         element: <LoginContainer />
+      },
+
+      // Public route (no authentication required)
+      { path: "/public/final/:id",
+        element: <PublicFinalView />
       }
   
     ],
